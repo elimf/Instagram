@@ -3,7 +3,7 @@
 $title="Search";
 
  //Afficher les commentaires       
-        $sql = 'SELECT comment.contenuCom,comment.timeCom,comment.idPost,comment.idComment, users.pseudo FROM `comment`, `users` WHERE comment.id = users.id  ';
+        $sql = 'SELECT * FROM `comment`, `users` WHERE comment.user_id = users.id_user  ';
         $query = $db->prepare($sql);
         $query->execute([]);
         $listCom = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -13,9 +13,9 @@ ob_start() ?>
 <div class="container-fluid ">
     <div class="row justify-content-end ">  
         <div class="col-12">
-            <?php require __DIR__.'/../../src/partials/result/commentResult.php'?>
-             <?php require __DIR__.'/../../src/partials/result/deleteResult.php'?>
-                <?php require __DIR__.'/../../src/partials/result/searchResult.php'?>
+            <?php require __DIR__.'/../partials/result/commentResult.php'?>
+             <?php require __DIR__.'/../partials/result/deleteResult.php'?>
+                <?php require __DIR__.'/../partials/result/searchResult.php'?>
         </div>
         
     </div>
@@ -26,7 +26,7 @@ ob_start() ?>
            
         </div>
         <div class="col-0">
-            <a href="/Home"><button class="btn btn-warning ">Return</button></a>
+            <a href="/?Home"><button class="btn btn-warning ">Return</button></a>
         </div>
             <div class=" col-12 ">
                 <div class="row justify-content-center ">
