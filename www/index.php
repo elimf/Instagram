@@ -38,7 +38,7 @@ switch ($request) {
         require __DIR__ . '/../src/pages/comment.php';
         break;
     case '/?Settings':
-        require __DIR__ . '/../src/pages/settings.php';
+        require __DIR__ . '/../src/vue/pages/settings.php';
         break;
     case '/actions/login.php':
         require __DIR__ . '/actions/login.php';
