@@ -27,9 +27,16 @@
 <style>
     <?php require_once "../src/public/css/home.css"; ?>
 </style>
+<style>
+    <?php require_once "../src/public/css/insta.css"; ?>
+</style>
 
 <body style="margin-top:100px;background-color: #FFFFFF;">
-    <?php require_once "partials/navbar.php" ?>
+    <?php require_once "partials/navbar.php";
+    if (!isset($_ENV['url'])) {
+        $_ENV['url'] = "http://localhost:4000";
+    } ?>
+
     <?php if ($content == " ") {
         echo $content;
     } else {

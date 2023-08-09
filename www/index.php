@@ -16,9 +16,6 @@ switch ($request) {
     case '/?Home':
         require __DIR__ . '/../src/vue/pages/home.php';
         break;
-    case '/?Search':
-        require __DIR__ . '/../src/vue/pages/search.php';
-        break;
     case '/?Create':
         require __DIR__ . '/../src/vue/pages/addPost.php';
         break;

@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../src/database/db.php';
 
 if (empty($_POST["post_title"]) || empty($_POST["post_picture"])) {
     $_SESSION['post_error'] = "Need a post!";
-    header("Location: http://127.0.0.1:12001/Create ");
+    header("Location: " . $_ENV['url'] . "/?Create ");
     die();
 }
 $sql = 'INSERT INTO post(contenu, id, url, likes, tag) VALUES (:contenu, :id, :url, :likes, :tag)';
@@ -18,4 +18,4 @@ $query->execute([
     ':tag' => $_POST["tag"]
 ]);
 
-header("Location: https://elimf.alwaysdata.net/?Home");
+header("Location:" . $_ENV['url'] . "/?Home");

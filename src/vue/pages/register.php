@@ -41,10 +41,7 @@ unset($_SESSION['signup_valid']);
             <label for="password">Password</label>
          </div>
          <button class="login-button" title="login">Sign up</button>
-         <div class="separator">
-            <div class="line"></div>
-            <div class="line"></div>
-         </div>
+         
       </form>
        -
    </div>

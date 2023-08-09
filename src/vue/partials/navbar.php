@@ -1,6 +1,6 @@
  <?php if (empty($_SESSION['user'])) {
    ?>
- <?php } else {?>
+ <?php } else { ?>
     <div class="navigation">
        <div class="logo">
           <a class="no-underline" href="/?Home">
@@ -22,18 +22,7 @@
           <a href="/?Create" class="navigation-link">
              <i class="bi bi-plus-square"></i>
           </a>
-          <a href="/?Search" class="navigation-link">
-             <i class="bi bi-compass-fill"></i>
-          </a>
-          <a class="navigation-link notifica">
-             <i class="bi bi-heart"></i>
-             <div class="notification-bubble-wrapper">
-                <div class="notification-bubble">
-                   <span class="notifications-count">99</span>
-                </div>
-             </div>
-             </i>
-          </a>
+         
           <a class="dropdown dropleft ">
              <a class=" " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img style="
