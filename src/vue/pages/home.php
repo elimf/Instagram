@@ -124,7 +124,37 @@ ob_start() ?>
           </span>
 
           <span class="card-subtitle"> <?= empty($post["location"]) ? "" : $post["location"] ?></span>
-          <div class="card-opt-btn flex-container"><i class="bi bi-three-dots"></i></div>
+
+          <div class="dropdown dropleft">
+            <button class="btn btn-none" style="background: none" type="button" data-toggle="dropdown"> <i class="bi bi-three-dots"></i>
+            </button>
+            <div class="dropdown-menu">
+              <!-- <form action="/actions/logPost.php" method="post">
+                <div class="row justify-content-center">
+                  <div class="col-0 ">
+                    <input type="hidden" name="contenu" value="<?= $post['legende'] ?>">
+                    <input type="hidden" name="url" value="<?= $post['url_publication'] ?>">
+                    <input type="hidden" name="id" value="<?= $post['id_publication'] ?>">
+                  </div>
+                  <div class="col-0 ">
+                    <button type="submit" class="btn" style="background: orange;">Update Post</button>
+                  </div>
+                </div>
+
+              </form> -->
+              <form action="/actions/deletePost.php" method="post">
+                <div class="row justify-content-center">
+                  <div class="col-0 ">
+                    <input type="hidden" name="idPost" value="<?= $post['id_publication'] ?>">
+                  </div>
+                  <div class="col-0 ">
+                    <button type="submit" class="btn btn-danger">Delete Post</button>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
         </div>
         <div class="card-img-container">
           <img class="card-img" src="<?= $post["url_publication"] ?>" alt="">
