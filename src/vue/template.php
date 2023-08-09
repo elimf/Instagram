@@ -34,7 +34,7 @@
 <body style="margin-top:100px;background-color: #FFFFFF;">
     <?php require_once "partials/navbar.php";
     if (!isset($_ENV['url'])) {
-        $_ENV['url'] = "http://localhost:4000";
+        $_ENV['url'] = "https://elimf.alwaysdata.net";
     } ?>
 
     <?php if ($content == " ") {

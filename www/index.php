@@ -7,7 +7,7 @@ switch ($request) {
     case '/':
         require __DIR__ . '/../src/vue/pages/main.php';
         break;
-    case '/?register':
+    case '/?Register':
         require __DIR__ . '/../src/vue/pages/register.php';
         break;
     case '/?Main':

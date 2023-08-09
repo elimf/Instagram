@@ -51,7 +51,7 @@ unset($_SESSION['signup_valid']);
       </form>
    </div>
    <div class="box">
-      <p>Don't have an account? <a class="signup" href="/?register">Sign Up</a></p>
+      <p>Don't have an account? <a class="signup" href="/?Register">Sign Up</a></p>
    </div>
 </div>
 <style>

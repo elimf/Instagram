@@ -4,20 +4,20 @@ require_once __DIR__ . '/../../src/database/db.php';
 
 if (empty($_POST['username']) || empty($_POST['email']) || empty($_POST['password'] || empty($_POST['fullname']))) {
     $_SESSION['signup_error'] = "ERROR SIGNUP : Please fill in all fields.";
-    header("Location: https://elimf.alwaysdata.net/?register ");
+    header("Location:" . $_ENV['url'] . "/?Register");
     die();
 }
 
 if (!ctype_alnum($_POST['username'])) {
     $_SESSION['signup_error'] = "ERROR SIGNUP : Pseudo invalid";
-    header("Location: https://elimf.alwaysdata.net/?register ");
+    header("Location:" . $_ENV['url'] . "/?Register");
     die();
 }
 
 $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
 if ($email == false) {
     $_SESSION['signup_error'] = "ERROR SIGNUP : Please enter a valid email.";
-    header("Location: https://elimf.alwaysdata.net/?register ");
+    header("Location:" . $_ENV['url'] . "/?Register");
     die();
 }
 $password = hash('sha256', $_POST['password']);
@@ -33,7 +33,7 @@ $data = $query->fetch(PDO::FETCH_ASSOC);
 
 if ($data) {
     $_SESSION['signup_error'] = "ERROR SIGNUP : Email already used";
-    header("Location: https://elimf.alwaysdata.net/?register ");
+    header("Location:" . $_ENV['url'] . "/?Register");
     die();
 }
 $sql = 'INSERT INTO users(email, pseudo,fullname, password,roles) VALUES (:email, :pseudo,:fullname :password,:roles)';
@@ -47,4 +47,4 @@ $query->execute([
 ]);
 $data = $query->fetchAll();
 $_SESSION['signup_valid'] = "Congratulations welcome among us";
-header("Location:https://elimf.alwaysdata.net/");
+header("Location:" . $_ENV['url']);
