@@ -1,65 +1,36 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../src/db.php';
+require_once __DIR__ . '/../../src/database/db.php';
 
-    if(!empty($_POST['val']) || !empty($_POST['idPost'])) {
-        $sql='SELECT idlikes FROM likes where idPost = :idPost AND id= :id';
+if (!empty($_POST['post_id'])) {
+    $sql = 'SELECT id_like FROM likes where publication_id = :publication_id AND user_id= :user_id';
     $query = $db->prepare($sql);
     $query->execute([
-        ':idPost' => $_POST['idPost'],
-        ':id' => $_SESSION['user']['id']
+        ':publication_id' => $_POST['post_id'],
+        ':user_id' => $_SESSION['user']['id_user']
     ]);
     $check = $query->fetch(PDO::FETCH_ASSOC);
     if ($check) {
         //Supression du Like si il existe déja
-                    $sql ='DELETE FROM likes WHERE idPost = :idPost AND id = :id ';
+        $sql = 'DELETE FROM likes WHERE publication_id = :publication_id AND user_id = :user_id ';
         $query = $db->prepare($sql);
         $query->execute([
-            ':idPost' => $_POST['idPost'],
-                        ':id'=> $_SESSION['user']['id']
-        ]);
-        //Nombre total de likes pour un post
-                    $sql='SELECT COUNT(likes.idLikes) FROM `likes` WHERE idPost = :idPost ';
-        $query = $db->prepare($sql);
-        $query->execute([
-            ':idPost' => $_POST['idPost']
-        ]);
-                    $nbLike= $query->fetchAll(PDO::FETCH_ASSOC);
-        //Mise a jour des likes
-                    $sql ='UPDATE post set likes = :likes WHERE idPost = :idPost';
-        $query = $db->prepare($sql);
-        $query->execute([
-            ':likes' => $nbLike[0]["COUNT(likes.idLikes)"],
-                        ':idPost'=> $_POST['idPost']
+            ':publication_id' => $_POST['post_id'],
+            ':user_id' => $_SESSION['user']['id_user']
         ]);
 
-        header("Location: https://elimf.alwaysdata.net/?Home");
+        header("Location:" . $_ENV['url'] . "/?Home");
         die();
-            }else{
+    } else {
         //Ajout des likes
-        $sql = 'INSERT INTO likes (idPost,id) VALUES (:idPost,:id)';
+        $sql = 'INSERT INTO likes (publication_id,user_id) VALUES (:publication_id,:user_id)';
         $query = $db->prepare($sql);
         $query->execute([
-            ':idPost' => $_POST['idPost'],
-                    ':id'=> $_SESSION['user']['id']
-        ]);
-        //Nombre total de likes pour un post
-                $sql='SELECT COUNT(likes.idLikes) FROM `likes` WHERE idPost = :idPost ';
-        $query = $db->prepare($sql);
-        $query->execute([
-            ':idPost' => $_POST['idPost']
-        ]);
-                $nbLike= $query->fetchAll(PDO::FETCH_ASSOC);
-
-        //Mise a jour des likes
-                $sql ='UPDATE post set likes = :likes WHERE idPost = :idPost';
-        $query = $db->prepare($sql);
-        $query->execute([
-            ':likes' => $nbLike[0]["COUNT(likes.idLikes)"],
-                        ':idPost'=> $_POST['idPost']
+            ':publication_id' => $_POST['post_id'],
+            ':user_id' => $_SESSION['user']['id_user']
         ]);
     }
 
-    header("Location: https://elimf.alwaysdata.net/?Home");
+    header("Location:" . $_ENV['url'] . "/?Home");
     die();
 }

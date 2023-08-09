@@ -1,34 +1,36 @@
 <?php
 $title = "Home";
 //Affiche toutes les publications    
-$sql = 'SELECT 
-    P.id_publication,
-    P.user_id AS utilisateur_id_publication,
-    P.url_publication,
-    U.*,
-    P.legende,
-    P.created_at AS date_publication,
-    COUNT(DISTINCT L.id_like) AS number_pub_like,
-    C.id_comment,
-    C.contenu,
-    C.created_at AS date_commentaire,
-    COUNT(DISTINCT LC.id_like) AS nombre_likes_commentaire,
-    UCU.pseudo 
-FROM publication P
-LEFT JOIN likes L ON P.id_publication = L.publication_id
-LEFT JOIN comment C ON P.id_publication = C.publication_id
-LEFT JOIN likes LC ON C.id_comment = LC.comment_id
-LEFT JOIN users U ON P.user_id = U.id_user
-LEFT JOIN comment UC ON U.id_user= UC.user_id
-LEFT JOIN users UCU ON UC.user_id = UCU.id_user
-GROUP BY P.id_publication, C.id_comment
-ORDER BY P.id_publication, C.id_comment;
+$sql = '
+    SELECT 
+        P.id_publication,
+        P.user_id AS utilisateur_id_publication,
+        P.url_publication,
+        U.*,
+        P.legende,
+        P.created_at AS date_publication,
+        COUNT(DISTINCT L.id_like) AS number_pub_like,
+        C.id_comment,
+        C.contenu,
+        C.created_at AS date_commentaire,
+        COUNT(DISTINCT LC.id_like) AS nombre_likes_commentaire,
+        UCU.pseudo,
+        CASE WHEN UL.user_id IS NOT NULL THEN 1 ELSE 0 END AS user_has_liked
+    FROM publication P
+    LEFT JOIN likes L ON P.id_publication = L.publication_id
+    LEFT JOIN comment C ON P.id_publication = C.publication_id
+    LEFT JOIN likes LC ON C.id_comment = LC.comment_id
+    LEFT JOIN users U ON P.user_id = U.id_user
+    LEFT JOIN comment UC ON U.id_user = UC.user_id
+    LEFT JOIN users UCU ON UC.user_id = UCU.id_user
+    LEFT JOIN likes UL ON P.id_publication = UL.publication_id AND UL.user_id = :user_id
+    GROUP BY P.id_publication, C.id_comment
+    ORDER BY P.id_publication, C.id_comment;
+';
 
- ';
 $query = $db->prepare($sql);
-$query->execute([]);
+$query->execute(['user_id' => $_SESSION['user']['id_user']]);
 $listPost = $query->fetchAll(PDO::FETCH_ASSOC);
-shuffle($listPost);
 ob_start() ?>
 
 <section class="main-content grid">
@@ -129,11 +131,17 @@ ob_start() ?>
         </div>
         <div class="card-data flex-container">
           <div class="card-icons flex-container">
-            <span class="card-icon card-icon-left"><i class="bi bi-heart"></i></span>
+            <form method="post" action="/actions/like.php">
+              <input type="hidden" name="post_id" value="<?= $post["id_publication"] ?>">
+              <button type="submit" class="btn btn-link">
+                <span class="card-icon card-icon-left"> <i class="bi bi-heart <?= ($post["user_has_liked"] == 1) ? "text-danger" : "" ?>"></i></span>
+              </button>
+            </form>
             <span class="card-icon card-icon-left"><i class="bi bi-chat"></i></span>
             <span class="card-icon card-icon-left"><i class="bi bi-send"></i></span>
             <span class="card-icon card-icon-right"><i class="bi bi-bookmark"></i></span>
           </div>
+
           <span class="bold card-text"><?= $post["number_pub_like"] ?> Likes</span>
           <span class="card-text"><span class="bold title-margin"><?= $post["pseudo"] ?></span><?= $post["legende"] ?></span>
           <span class="card-text comments-btn">See more comments</span>
