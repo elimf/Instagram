@@ -53,6 +53,15 @@ a {
   text-overflow: ellipsis;
 }
 
+textarea {
+  padding: 9px 0px 7px 9px;
+  font-size: 12px;
+  width: 100%;
+  outline: none;
+  background: #fafafa;
+  border-radius: 3px;
+  border: 1px solid #efefef;
+}
 input {
   padding: 9px 0px 7px 9px;
   font-size: 12px;

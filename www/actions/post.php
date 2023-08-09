@@ -3,19 +3,18 @@ session_start();
 
 require_once __DIR__ . '/../../src/database/db.php';
 
-if (empty($_POST["post_title"]) || empty($_POST["post_picture"])) {
-    $_SESSION['post_error'] = "Need a post!";
+if ( empty($_POST["post_picture"])) {
+    $_SESSION['post_error'] = "Need a picture!";
     header("Location: " . $_ENV['url'] . "/?Create ");
     die();
 }
-$sql = 'INSERT INTO post(contenu, id, url, likes, tag) VALUES (:contenu, :id, :url, :likes, :tag)';
+$sql = 'INSERT INTO publication(legende, user_id, url_publication,location) VALUES (:legende, :user_id, :url_publication,:location)';
 $query = $db->prepare($sql);
 $query->execute([
-    ':contenu' => $_POST["post_title"],
-    ':id' => $_SESSION['user']['id'],
-    ':url' => $_POST["post_picture"],
-    ':likes' => 0,
-    ':tag' => $_POST["tag"]
+    ':legende' => $_POST["post_caption"],
+    ':user_id' => $_SESSION['user']['id_user'],
+    ':url_publication' => $_POST["post_picture"],
+    'location' => $_POST["post_location"],
 ]);
 
 header("Location:" . $_ENV['url'] . "/?Home");
