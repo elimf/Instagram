@@ -40,6 +40,15 @@ switch ($request) {
     case '/actions/login.php':
         require __DIR__ . '/actions/login.php';
         break;
+    case '/actions/like.php':
+        require __DIR__ . '/actions/like.php';
+        break;
+    case '/actions/post.php':
+        require __DIR__ . '/actions/post.php';
+        break;
+    case '/actions/deletePost.php':
+        require __DIR__ . '/actions/deletePost.php';
+        break;
     case '/actions/signup.php':
         require __DIR__ . '/actions/signup.php';
         break;
